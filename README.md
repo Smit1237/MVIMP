@@ -204,12 +204,13 @@ Other Python dependencies listed in `colab_requirements.txt`, and will be auto i
 
 # TODO
 - [x] Chinese Document
-- [x] DeOldify for colorizing and restoring old images and videos
+- [x] `DeOldify` for colorizing and restoring old images and videos
 - [x] tqdm instead of print loop
-- [x] Original DeOldify local as well as Colab
+- [x] Original `DeOldify` local as well as Colab
 - [ ] Dockerized deployment.
 - [ ] https://roxanneluo.github.io/Consistent-Video-Depth-Estimation/
-- [ ] MMSR for image and video super-resolution
+- [ ] `MMSR` for image and video super-resolution.
+- [ ] `waifu2x` Image Super-Resolution for Anime-Style Art
 
 You are welcomed to discuss future features in [this issue](https://github.com/CyFeng16/MVIMP/issues/2).
 
