@@ -5,4 +5,4 @@ source activate pytorch1.0.0
 
 
 rm -rf build *.egg-info dist
-python3 setup.py install
+python setup.py install
