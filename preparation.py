@@ -100,7 +100,7 @@ def deoldify_preparation():
     shutil.move("ColorizeStable_gen.pth", "models")
     shutil.move("ColorizeArtistic_gen.pth", "models")
 
-    os.system(f"pip install -r colab_requirements.txt")
+    os.system(f"pip3 install -r colab_requirements.txt")
 
 
 if __name__ == "__main__":
