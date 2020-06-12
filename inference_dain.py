@@ -33,6 +33,13 @@ def config():
         action="store_true",
         help="split the frames when handling 720+ videos",
     )
+    parser.add_argument(
+        "--bitrate",
+        "-br",
+        type=str,
+        default="5M",
+        help="Bitrate of output video, like in ffmpeg options"
+    )
     return parser.parse_args()
 
 
@@ -77,16 +84,32 @@ if __name__ == "__main__":
     print(cmd)
     os.system(cmd)
 
-    # STAGE 3: video post-processing
+#print("Start to resize DAIN-inference-frames...")
+#for post_images in tqdm(os.listdir(output_data_dir)):
+#    root, ext = os.path.splitext(post_images)
+#    img_link = os.path.join(output_data_dir, post_images)
+##    if root[-1] != "0" and ext == "png":
+#        image = pil.Image.open(img)
+#        try:
+#            image.load()
+#        except IOError as e:
+#            print ('Bad image: %s' )
+#    else:
+#        print("Succeed to resize DAIN-inference-frames!")
+
+    # STAGE 4: video post-processing
     os.chdir(DAIN_PREFIX)
     clean_folder(input_data_dir)
     file_order(src=output_data_dir, dst=input_data_dir)
-    output_video_file = f"{args.input_video.split('.')[0]}-{target_fps}.{args.input_video.split('.')[1]}"
+    #output_video_file = f"{args.input_video.split('.')[0]}-{target_fps}.{args.input_video.split('.')[1]}"
+    output_video_file = f"{args.input_video.split('.')[0]}-{target_fps}.mp4"
 
     video_fusion(
         src=input_data_dir + "/%10d.png",
         dst=os.path.join(output_data_dir, output_video_file),
         fps=target_fps,
-        thread=4,
+        thread=12,
+        bitrate=args.bitrate,
     )
     clean_folder(input_data_dir)
+

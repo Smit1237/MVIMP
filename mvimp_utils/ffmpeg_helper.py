@@ -1,6 +1,6 @@
 import cv2
 import os
-
+import PIL
 
 def fps_info(src: str) -> float:
     """video fps lookup"""
@@ -28,28 +28,31 @@ def frames_info(src: str) -> int:
     return frame_count
 
 
+
 def video_extract(src: str, dst: str, thread: int) -> None:
     """pre-processing video to png"""
     cmd = (
-        f"ffmpeg -hide_banner -loglevel warning "
+        f"ffmpeg -y -hide_banner -loglevel warning "
         f"-threads {thread} "
         f"-i {src} "
+        f"-map 0:a? /tmp/audio.m4a "
         f"{dst}/%8d.png"
     )
     print(cmd)
     os.system(cmd)
     print("The video-image extracting job is done.")
 
-
-def video_fusion(src: str, dst: str, fps: float, thread: int) -> None:
+def video_fusion(src: str, dst: str, fps: float, thread: int, bitrate: str) -> None:
     """post-processing png to video"""
     cmd = (
-        f"ffmpeg -hide_banner -loglevel warning "
+        f"ffmpeg -y -hide_banner -loglevel warning "
         f"-threads {thread} "
         f"-r {fps} "
         f"-f image2 -i {src} "
-        f"-y -c:v libx264 -preset slow -crf 8 {dst}"
+        f"-i /tmp/audio.m4a "
+        f"-y -c:v libx264 -pix_fmt yuv420p -preset slow -crf 18 -profile:v baseline -b:v {bitrate} -minrate {bitrate} -maxrate {bitrate} -bufsize 6M -c:a aac {dst}"
     )
     print(cmd)
     os.system(cmd)
     print("The image-video fusion job is done.")
+
