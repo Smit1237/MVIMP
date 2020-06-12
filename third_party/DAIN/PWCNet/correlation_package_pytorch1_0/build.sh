@@ -5,4 +5,4 @@ echo "Need pytorch>=1.0.0"
 
 
 rm -rf build *.egg-info dist
-python setup.py install
+python3 setup.py install
